@@ -1,12 +1,12 @@
 #Atompunk78's BeamNG Track Generator
 #Licenced under the CC BY-NC-ND 4.0 (see licence.txt for more info)
-#v1.1
+#v1.2
 
 from random import randint, choice
 
 fileStart = """
 {
-  "author": "Atompunk78's Track Generator v1.1",
+  "author": "Atompunk78's Track Generator v1.2",
   "connected": false,
   "date": "0",
   "defaultLaps": 1,
@@ -40,13 +40,13 @@ fileStart = """
         "piece": "init",
         "width": {
           "interpolation": "smoothSlope",
-          "value": ?
+          "value": ?4
         }
       },
       {
-        "centerMesh": "flat",
-        "leftMesh": "smallDiagonal",
-        "rightMesh":"smallDiagonal",
+        "centerMesh": "?1",
+        "leftMesh": "?2",
+        "rightMesh": "?3",
         "length": 2,
         "piece": "freeForward"
       },
@@ -54,9 +54,9 @@ fileStart = """
 
 fileEnd = """
       {
-        "centerMesh": "flat",
-        "leftMesh": "smallDiagonal",
-        "rightMesh":"smallDiagonal",
+        "centerMesh": "?1",
+        "leftMesh": "?2",
+        "rightMesh": "?3",
         "length": 2,
         "piece": "freeForward"
       }
@@ -79,7 +79,7 @@ currentHeight = 0
 
 parameters = {
     "savePath": "C:/Users/User/AppData/Local/BeamNG.drive/0.33/trackEditor/Atompunk78's_autogen_track.json", #this path will break every time there's a major beamng update
-    "overwriteTracks": True, #should a newly-generated track overwrite the old one?
+    "overwriteTracks": True, #should the newly-generated track overwrite the old one?
     "totalLength": 100,
     "trackWidth": 8,
     "centreMeshType": "flat",
@@ -116,7 +116,8 @@ parameters = {
     "longTurnHeightChanceDist": [0,1],
 }
 
-fileStart = fileStart.replace("?", str(parameters["trackWidth"]))
+fileStart = fileStart.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"]).replace("?4", str(parameters["trackWidth"]))
+fileEnd = fileEnd.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"])
 
 def addPiece():
     global currentHeight
