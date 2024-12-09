@@ -1,11 +1,12 @@
 #Atompunk78's BeamNG Track Generator
 #Licenced under the CC BY-NC-ND 4.0 (see licence.txt for more info)
+#v1.1
 
 from random import randint, choice
 
 fileStart = """
 {
-  "author": "Atompunk78's Track Generator",
+  "author": "Atompunk78's Track Generator v1.1",
   "connected": false,
   "date": "0",
   "defaultLaps": 1,

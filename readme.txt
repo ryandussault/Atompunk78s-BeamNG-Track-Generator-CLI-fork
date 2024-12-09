@@ -1,4 +1,4 @@
-Hi! Welcome to my track generator, I hope you enjoy it!
+Hi! Welcome to Atompunk78's BeamNG Track Generator, I hope you enjoy it!
 
 To use the program you can set the 'savePath' parameter to a file name within BeamNG's 'trackEditor' folder, and then run the program. This will generate one track with the default parameters. If you want to generate multiple tracks, set 'overwriteTracks' to 'False' then run the program multiple times.
 You can change the parameters to make it generate different types of tracks. Occasionally the generated tracks will cross over themselves (or otherwise be invalid), if this happens just generate a new one.
