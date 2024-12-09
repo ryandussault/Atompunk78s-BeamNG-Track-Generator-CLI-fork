@@ -1,12 +1,12 @@
 #Atompunk78's BeamNG Track Generator
 #Licenced under the CC BY-NC-ND 4.0 (see licence.txt for more info)
-#v1.2
+#v1.3
 
 from random import randint, choice
 
 fileStart = """
 {
-  "author": "Atompunk78's Track Generator v1.2",
+  "author": "Atompunk78's Track Generator v1.3",
   "connected": false,
   "date": "0",
   "defaultLaps": 1,
@@ -72,7 +72,7 @@ fileEnd = """
   ],
   "version": "1.1"
 }
-"""
+""" #the version just above represents the track editor version, not that of this program
 
 currentFileString = ""
 currentHeight = 0
@@ -85,13 +85,13 @@ parameters = {
     "centreMeshType": "flat",
     "leftMeshType": "smallDiagonal",
     "rightMeshType": "smallDiagonal",
-    "tileTypeDist": [1,1,2,3,3,3,3,3,3,3,4],
+    "tileTypeDist": [1,2,3,3,3,4],
     "shortStraightLengthMin": 2,
     "shortStraightLengthMax": 4,
     "shortStraightHeightDist": [-1,0,1],
     "shortStraightHeightChanceDist": [0,0,1],
     "longStraightLengthMin": 4,
-    "longStraightLengthMax": 8,
+    "longStraightLengthMax": 10,
     "longStraightHeightDist": [-8,-5,-2,0,2,5,8],
     "longStraightHeightChanceDist": [0,0,1],
     "shortTurnLengthMin1": 10,
@@ -104,10 +104,10 @@ parameters = {
     "shortTurnRadiusMax2": 8,
     "shortTurnHeightDist": [-1,0,1],
     "shortTurnHeightChanceDist": [0,0,1],
-    "longTurnLengthMin1": 10,
-    "longTurnLengthMax1": 45,
-    "longTurnLengthMin2": 10,
-    "longTurnLengthMax2": 45,
+    "longTurnLengthMin1": 15,
+    "longTurnLengthMax1": 60,
+    "longTurnLengthMin2": 15,
+    "longTurnLengthMax2": 60,
     "longTurnRadiusMin1": 3,
     "longTurnRadiusMax1": 16,
     "longTurnRadiusMin2": 3,
