@@ -1,12 +1,12 @@
 #Atompunk78's BeamNG Track Generator
 #Licenced under the CC BY-NC-ND 4.0 (see licence.txt for more info)
-#v1.3
+version = "1.4"
 
 from random import randint, choice
 
 fileStart = """
 {
-  "author": "Atompunk78's Track Generator v1.3",
+  "author": "Atompunk78's Track Generator ?5",
   "connected": false,
   "date": "0",
   "defaultLaps": 1,
@@ -78,7 +78,7 @@ currentFileString = ""
 currentHeight = 0
 
 parameters = {
-    "savePath": "C:/Users/User/AppData/Local/BeamNG.drive/0.33/trackEditor/Atompunk78's_autogen_track.json", #this path will break every time there's a major beamng update
+    "savePath": "C:/Users/User/AppData/Local/BeamNG.drive/0.34/trackEditor/Atompunk78's_autogen_track.json", #this path will break every time there's a major beamng update
     "overwriteTracks": True, #should the newly-generated track overwrite the old one?
     "totalLength": 100,
     "trackWidth": 8,
@@ -116,7 +116,7 @@ parameters = {
     "longTurnHeightChanceDist": [0,1],
 }
 
-fileStart = fileStart.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"]).replace("?4", str(parameters["trackWidth"]))
+fileStart = fileStart.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"]).replace("?4", str(parameters["trackWidth"])).replace("?5", "v"+version)
 fileEnd = fileEnd.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"])
 
 def addPiece():
