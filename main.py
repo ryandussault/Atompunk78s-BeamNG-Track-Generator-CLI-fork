@@ -1,8 +1,9 @@
 #Atompunk78's BeamNG Track Generator
 #Licenced under the CC BY-NC-ND 4.0 (see licence.txt for more info)
-version = "1.4"
+version = "1.5"
 
 from random import randint, choice
+import json
 
 fileStart = """
 {
@@ -67,7 +68,7 @@ fileEnd = """
       "hdg": 0,
       "x": 0,
       "y": 0,
-      "z": 50
+      "z": ?4
     }
   ],
   "version": "1.1"
@@ -77,47 +78,13 @@ fileEnd = """
 currentFileString = ""
 currentHeight = 0
 
-parameters = {
-    "savePath": "C:/Users/User/AppData/Local/BeamNG.drive/0.34/trackEditor/Atompunk78's_autogen_track.json", #this path will break every time there's a major beamng update
-    "overwriteTracks": True, #should the newly-generated track overwrite the old one?
-    "totalLength": 100,
-    "trackWidth": 8,
-    "centreMeshType": "flat",
-    "leftMeshType": "smallDiagonal",
-    "rightMeshType": "smallDiagonal",
-    "tileTypeDist": [1,2,3,3,3,4],
-    "shortStraightLengthMin": 2,
-    "shortStraightLengthMax": 4,
-    "shortStraightHeightDist": [-1,0,1],
-    "shortStraightHeightChanceDist": [0,0,1],
-    "longStraightLengthMin": 4,
-    "longStraightLengthMax": 10,
-    "longStraightHeightDist": [-8,-5,-2,0,2,5,8],
-    "longStraightHeightChanceDist": [0,0,1],
-    "shortTurnLengthMin1": 10,
-    "shortTurnLengthMax1": 20,
-    "shortTurnLengthMin2": 5,
-    "shortTurnLengthMax2": 20,
-    "shortTurnRadiusMin1": 1,
-    "shortTurnRadiusMax1": 8,
-    "shortTurnRadiusMin2": 1,
-    "shortTurnRadiusMax2": 8,
-    "shortTurnHeightDist": [-1,0,1],
-    "shortTurnHeightChanceDist": [0,0,1],
-    "longTurnLengthMin1": 15,
-    "longTurnLengthMax1": 60,
-    "longTurnLengthMin2": 15,
-    "longTurnLengthMax2": 60,
-    "longTurnRadiusMin1": 3,
-    "longTurnRadiusMax1": 16,
-    "longTurnRadiusMin2": 3,
-    "longTurnRadiusMax2": 16,
-    "longTurnHeightDist": [-8,-3,0,0,3,8],
-    "longTurnHeightChanceDist": [0,1],
-}
+with open("config.json", "r") as file:
+    parameters = json.load(file)
+
+fileName = parameters["savePath"] + "/" + parameters["trackName"]
 
 fileStart = fileStart.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"]).replace("?4", str(parameters["trackWidth"])).replace("?5", "v"+version)
-fileEnd = fileEnd.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"])
+fileEnd = fileEnd.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"]).replace("?4", str(parameters["startHeight"]))
 
 def addPiece():
     global currentHeight
@@ -207,9 +174,19 @@ def addPiece():
 
     return newPiece.replace("[","{").replace("]","}").replace("?","")
 
-
-for i in range(parameters["totalLength"]):
-    currentFileString += addPiece()
+acceptableTrack = False
+while not acceptableTrack: #makes sure track doesn't go below 0 height
+    acceptableTrack = True
+    for i in range(parameters["totalLength"]):
+      if acceptableTrack:
+          if parameters["startHeight"] + currentHeight > 0:
+              currentFileString += addPiece()
+          else:
+              acceptableTrack = False
+    if not acceptableTrack and parameters["showDebugMessages"]:
+      currentFileString = ""
+      currentHeight = 0
+      print("\nTrack layout invalid, regenerating track...",end="")
 
 currentFileString = fileStart + currentFileString + fileEnd
 
@@ -221,21 +198,21 @@ if not parameters["overwriteTracks"]:
           data = []
       existingFile = False
       for name in data:
-          if parameters["savePath"] == name[0]:
+          if fileName == name[0]:
               existingFile = True
               dataLocation = data.index(name)
       if existingFile:
           data[dataLocation][1] += 1
-          saveName = parameters["savePath"].replace(".json","") + "_" + str(data[dataLocation][1])
+          saveName = fileName.replace(".json","") + "_" + str(data[dataLocation][1])
       else:
-          data.append([parameters["savePath"], 1])
-          saveName = parameters["savePath"].replace(".json","") + "_1"
+          data.append([fileName, 1])
+          saveName = fileName.replace(".json","") + "_1"
       saveName += ".json"
   
   with open("data.txt", "w") as file:
       file.write(str(data))
 else:
-    saveName = parameters["savePath"]
+    saveName = fileName
 
 with open(saveName, "w") as file:
     file.write(currentFileString)
