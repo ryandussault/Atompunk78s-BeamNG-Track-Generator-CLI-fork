@@ -1,9 +1,10 @@
 #Atompunk78's BeamNG Track Generator
 #Licenced under the CC BY-NC-ND 4.0 (see licence.txt for more info)
-version = "1.5"
+version = "1.6"
 
 from random import randint, choice
 import json
+import sys
 
 fileStart = """
 {
@@ -78,8 +79,22 @@ fileEnd = """
 currentFileString = ""
 currentHeight = 0
 
-with open("config.json", "r") as file:
-    parameters = json.load(file)
+try:
+    with open("config.json", "r") as file:
+        parameters = json.load(file)
+except:
+    print("\nThe config file cannot be read. If this issue persists, redownload the file.\n")
+    sys.exit(1)
+
+try:
+    with open(f"Presets/{parameters['trackType']}.json", "r") as file:
+        parameters |= json.load(file)
+except FileNotFoundError:
+    print(f"\nThe preset {parameters['trackType']}.json cannot be found.\n")
+    sys.exit(1)
+except:
+    print(f"\nThe preset cannot be read. Fix any syntax errors, and if this issue persists, redownload the file.\n")
+    sys.exit(1)
 
 fileName = parameters["savePath"] + "/" + parameters["trackName"]
 
