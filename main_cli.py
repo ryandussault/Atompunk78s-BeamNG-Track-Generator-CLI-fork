@@ -221,7 +221,7 @@ def param_distrobution_edit(param, distro_designator, new_distro_amount):
 def print_valid_args():
     print("")
     print(" valid argument structure follows '-param=value', ie '-tl=50', which sets the total track length to 50")
-    print(" all arguments except -h (which does not take a value) take an integer as their value\n")
+    print(" all arguments, unless otherwise specified, take a value\n")
     print(" valid commands include:")
     print(" -tl     sets the total track length")
     print(" -tw     sets the tracks width")
@@ -233,7 +233,7 @@ def print_valid_args():
     print(" -sh     sets the starts height of the track")
     print(" -tn     changes the track name, takes a string, no spaces for now")
     print(" -p      changes the preset, if passed all other command line arguments will be ignored and the preset loaded, takes the name of the preset as a string")
-    print(" -v      verbose, shows debug messages, no value")
+    print(" -v      verbose, shows debug messages, takes no value")
     print(" -h      prints this help message\n")
 
 #pre check to see if any args have been passed
