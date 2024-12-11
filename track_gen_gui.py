@@ -13,10 +13,11 @@ def main():
               [PySimpleGUI.Text("Long Turn Tile Type Distribution: "), PySimpleGUI.Slider(range=(0,100), default_value=1, key="long_turn_distro", enable_events=True, orientation='horizontal')],
               [PySimpleGUI.Text("Track Name: "), PySimpleGUI.Input("Atompunk78's_autogen_track", justification='left',key="track_name_input", enable_events=True)],
               [PySimpleGUI.Text("Overwrite Existing Track: "), PySimpleGUI.Checkbox(text=" ", default=True, key="overwrite_track_checkbox", enable_events=True)],
-              [PySimpleGUI.Button('Generate Track', key="generate_track_button", enable_events=True)]
+              [PySimpleGUI.Button('Generate Track', key="generate_track_button", enable_events=True)],
+              [PySimpleGUI.Text("Track Generated with exit code: "),PySimpleGUI.Output(size=(50,2), key="output")]
               ]
 
-    window = PySimpleGUI.Window("Beamng Track Generator", layout=layout, size=(500,500))
+    window = PySimpleGUI.Window("Beamng Track Generator", layout=layout, size=(500,600))
 
     while True:
         event, values = window.read()
@@ -35,7 +36,7 @@ def generate_track(params):
 
     command = f"python main_cli.py -tl={int(params['track_length_slider'])} -tw={int(params['track_width_slider'])} -sh={int(params['track_height_slider'])} -ssd={int(params['short_straight_distro'])} -lsd={int(params['long_straight_distro'])} -std={int(params['short_turn_distro'])} -ltd={int(params['long_turn_distro'])} -tn={params['track_name_input']} {dot}"
 
-    system(command)
+    print(system(command))
 
-if __name__ == "__main__":
-    main()
+
+main()
