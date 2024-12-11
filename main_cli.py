@@ -239,7 +239,6 @@ def print_valid_args():
 #pre check to see if any args have been passed
 if len(argv) > 1:
     argalyzer(argv)
-    print(parameters)
 
 if parameters["trackType"] != "custom":
   try:
