@@ -1,4 +1,4 @@
-Hi! Welcome to Atompunk78's BeamNG Track Generator modified for ease of use by ryandussault, I hope you enjoy it!
+Hi! Welcome to Atompunk78's BeamNG Track Generator, modified for ease of use by ryandussault, I hope you enjoy it!
 
 To use the program:
  - Run the program using Python
@@ -23,4 +23,6 @@ I'm flexible on these, so if the above is a problem just send me a message!
 
 I hope you like the program, have fun :)
 
-please note that the gui version requires the PySimpleGui package, this fork is written in python 3.10
+Prerequisites:
+ -Python 3.10
+ -PySimpleGui (for the gui wrapper)
