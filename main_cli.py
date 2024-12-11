@@ -230,7 +230,7 @@ def print_valid_args():
     print(" -std    changes the distribution of the short turn tile type, the default is 8")
     print(" -ltd    changes the distribution of the long turn tile type, the default is 2")
     print(" -dot   causes the program to not overwrite the same track file, takes no input")
-    print(" -sh     sets the starts height of the track, values less that 20 have a good chance of not completing")
+    print(" -sh     sets the starts height of the track, values below 1 do not work")
     print(" -tn     changes the track name, takes a string, no spaces for now")
     print(" -p      changes the preset, if passed all other command line arguments will be ignored and the preset loaded, takes the name of the preset as a string")
     print(" -v      verbose, shows debug messages, takes no value")
