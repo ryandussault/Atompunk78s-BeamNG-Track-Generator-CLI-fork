@@ -1,7 +1,6 @@
 Hi! Welcome to Atompunk78's BeamNG Track Generator, I hope you enjoy it!
 
 To use the program:
- - Set the 'savePath' section in the config file to the location of BeamNG's 'trackEditor' folder
  - Run the program using Python.
  - Start BeamNG's track editor on gridmap
  - Load the newly generated track
@@ -16,7 +15,7 @@ The tracks are designed to be played on Small Grid Map rather than the default G
 If you're struggling with anything message me and I'll almost certainly be able to help.
 
 Kindly note there's a licence attached to the program. It basically says:
- - You can freely distribute it as long as it is unmodified and you give credit
+ - You can freely distribute and modify it as long as you give credit
  - You can't profit off of it
 
 I'm flexible on these, so if the above is a problem just send me a message!

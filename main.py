@@ -1,10 +1,11 @@
 #Atompunk78's BeamNG Track Generator
-#Licenced under the CC BY-NC-ND 4.0 (see licence.txt for more info)
-version = "1.6"
+#Licenced under the CC BY-NC-SA 4.0 (see licence.txt for more info)
+version = "1.7"
 
 from random import randint, choice
 import json
 import sys
+import os
 
 fileStart = """
 {
@@ -85,6 +86,34 @@ try:
 except:
     print("\nThe config file cannot be read. If this issue persists, redownload the file.\n")
     sys.exit(1)
+
+def findBeamNGVersion():
+    n = 10
+    found = False
+    while not found:
+        parameters["savePath"] = parameters["savePath"].replace("0."+str(n-1), "0."+str(n))
+        if parameters["showDebugMessages"]:
+            print("Trying for BeamNG version 0."+str(n))
+        if os.path.exists(parameters["savePath"]):
+            found = True
+        n += 1
+        if n >= 100:
+            break
+
+if parameters["savePath"] == "AUTODETECT":
+    print("Automatically detecting path to BeamNG...")
+    parameters["savePath"] = os.path.expanduser("~").replace("\\", "/") #just in case the backslashes cause issues
+    if os.path.exists(parameters["savePath"]):
+        parameters["savePath"] += "/AppData/Local/BeamNG.drive/0.33/trackEditor"
+        if not os.path.exists(parameters["savePath"]):
+            print("Path could not be found, retrying for new BeamNG versions...")
+            findBeamNGVersion()
+    else:
+        print("Home directory could not be found, you will have to manually enter the path to the trackEditor folder into the config file.")
+        sys.exit(1)
+    with open("config.json", "w") as file:
+        json.dump(parameters, file, indent=4)
+        print("Path found and updated")
 
 try:
     with open(f"Presets/{parameters['trackType']}.json", "r") as file:
