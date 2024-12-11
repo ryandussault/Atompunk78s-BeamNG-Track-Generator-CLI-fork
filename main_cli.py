@@ -264,6 +264,7 @@ def addPiece():
     if randomNumber == 1: #short straight
         length = randint(parameters["shortStraightLengthMin"], parameters["shortStraightLengthMax"])
         currentHeight += choice(parameters["shortStraightHeightDist"])
+        currentHeight=height_check(currentHeight)
         newPiece = f"""
       [
         "centerMesh": \"{parameters['centreMeshType']}\",
@@ -283,6 +284,7 @@ def addPiece():
     elif randomNumber == 2: #long straight
         length = randint(parameters["longStraightLengthMin"], parameters["longStraightLengthMax"])
         currentHeight += choice(parameters["longStraightHeightDist"])
+        currentHeight=height_check(currentHeight)
         newPiece = f"""
       [
         "centerMesh": \"{parameters['centreMeshType']}\",
@@ -304,6 +306,7 @@ def addPiece():
         length = randint(parameters["shortTurnLengthMin1"], parameters["shortTurnLengthMax1"]) + randint(parameters["shortTurnLengthMin2"], parameters["shortTurnLengthMax2"])
         radius = randint(parameters["shortTurnRadiusMin1"], parameters["shortTurnRadiusMax1"]) + randint(parameters["shortTurnRadiusMin2"], parameters["shortTurnRadiusMax2"])
         currentHeight += choice(parameters["shortTurnHeightDist"])
+        currentHeight=height_check(currentHeight)
         newPiece = f"""
       [
         "centerMesh": \"{parameters['centreMeshType']}\",
@@ -329,6 +332,8 @@ def addPiece():
         if radius <= parameters["longTurnRadiusMax1"]: #stops too long and gentle corners somewhat
             length += randint(parameters["longTurnLengthMin2"], parameters["longTurnLengthMax2"])
         currentHeight += choice(parameters["longTurnHeightDist"])
+        #prevents heights below 1
+        currentHeight=height_check(currentHeight)
         newPiece = f"""
       [
         "centerMesh": \"{parameters['centreMeshType']}\",
@@ -349,6 +354,13 @@ def addPiece():
 
     return newPiece.replace("[","{").replace("]","}").replace("?","")
 
+def height_check(current_height):
+    if parameters["startHeight"]+current_height<1:
+        current_height=1
+        return current_height
+    else:
+      return current_height
+
 acceptableTrack = False
 while not acceptableTrack: #makes sure track doesn't go below 0 height
     acceptableTrack = True
@@ -357,7 +369,7 @@ while not acceptableTrack: #makes sure track doesn't go below 0 height
           if parameters["startHeight"] + currentHeight > 0:
               currentFileString += addPiece()
           else:
-              currentHeight = 8
+              acceptableTrack=False
     if not acceptableTrack and parameters["showDebugMessages"]:
       currentFileString = ""
       currentHeight = 0
