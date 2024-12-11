@@ -1,6 +1,6 @@
 #Atompunk78's BeamNG Track Generator
 #Licenced under the CC BY-NC-SA 4.0 (see licence.txt for more info)
-version = "1.7"
+version = "1.8"
 
 from random import randint, choice
 import json
@@ -101,10 +101,10 @@ def findBeamNGVersion():
             break
 
 if parameters["savePath"] == "AUTODETECT":
-    print("Automatically detecting path to BeamNG...")
+    print("Automatically detecting file path to BeamNG...")
     parameters["savePath"] = os.path.expanduser("~").replace("\\", "/") #just in case the backslashes cause issues
     if os.path.exists(parameters["savePath"]):
-        parameters["savePath"] += "/AppData/Local/BeamNG.drive/0.33/trackEditor"
+        parameters["savePath"] += "/AppData/Local/BeamNG.drive/0.34/trackEditor"
         if not os.path.exists(parameters["savePath"]):
             print("Path could not be found, retrying for new BeamNG versions...")
             findBeamNGVersion()
