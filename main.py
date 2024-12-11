@@ -1,11 +1,12 @@
 #Atompunk78's BeamNG Track Generator
 #Licenced under the CC BY-NC-SA 4.0 (see licence.txt for more info)
-version = "1.8"
+version = "1.9"
 
 from random import randint, choice
 import json
 import sys
 import os
+import math
 
 fileStart = """
 {
@@ -79,6 +80,7 @@ fileEnd = """
 
 currentFileString = ""
 currentHeight = 0
+currentLength = 0
 
 try:
     with open("config.json", "r") as file:
@@ -98,7 +100,8 @@ def findBeamNGVersion():
             found = True
         n += 1
         if n >= 100:
-            break
+            print("The path to BeamNG could not be found, you will have to manually enter the path to the trackEditor folder into the config file.")
+            sys.exit(1)
 
 if parameters["savePath"] == "AUTODETECT":
     print("Automatically detecting file path to BeamNG...")
@@ -132,6 +135,7 @@ fileEnd = fileEnd.replace("?1", parameters["centreMeshType"]).replace("?2", para
 
 def addPiece():
     global currentHeight
+    global currentLength
     randomNumber = choice(parameters["tileTypeDist"])
 
     if randomNumber == 1: #short straight
@@ -151,6 +155,7 @@ def addPiece():
           "interpolation": "smoothSlope",
           "value": {currentHeight}
         ]""")
+        currentLength += length * 4
         
     elif randomNumber == 2: #long straight
         length = randint(parameters["longStraightLengthMin"], parameters["longStraightLengthMax"])
@@ -169,6 +174,7 @@ def addPiece():
           "interpolation": "smoothSlope",
           "value": {currentHeight}
         ]""")
+        currentLength += length * 4
         
     elif randomNumber == 3: #short turn
         direction = choice([-1,1])
@@ -191,6 +197,7 @@ def addPiece():
           "interpolation": "smoothSlope",
           "value": {currentHeight}
         ]""")
+        currentLength += round(2 * math.pi * radius * (length / 360), 1)
         
     elif randomNumber == 4: #long turn
         direction = choice([-1,1])
@@ -215,13 +222,14 @@ def addPiece():
           "interpolation": "smoothSlope",
           "value": {currentHeight}
         ]""")
+        currentLength += round(2 * math.pi * radius * (length / 360), 1)
 
     return newPiece.replace("[","{").replace("]","}").replace("?","")
 
 acceptableTrack = False
 while not acceptableTrack: #makes sure track doesn't go below 0 height
     acceptableTrack = True
-    for i in range(parameters["totalLength"]):
+    while currentLength < parameters["totalLength"]:
       if acceptableTrack:
           if parameters["startHeight"] + currentHeight > 0:
               currentFileString += addPiece()
