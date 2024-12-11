@@ -1,14 +1,15 @@
-Hi! Welcome to Atompunk78's BeamNG Track Generator, I hope you enjoy it!
+Hi! Welcome to Atompunk78's BeamNG Track Generator modified for ease of use by ryandussault, I hope you enjoy it!
 
 To use the program:
  - Run the program using Python
  - Start BeamNG's track editor on gridmap
  - Load the newly generated track
+ - Now takes command line arguments, pass in -h to get started
  
 This will generate one track with the default parameters. You don't need to reboot BeamNG to load a new generated track if the file name is the same as the old one.
 You can change the type of track it generates by changing 'trackType' in the config file to the name of any file in the 'Presets' folder, or make your own preset by creating one or editing the 'custom' preset.
 
-If you want to generate multiple tracks at once, set 'overwriteTracks' to 'False' then run the program multiple times.
+If you want to generate multiple tracks at once, pass in '-dot' (don't overwrite track) then run the program multiple times.
 Occasionally the generated tracks will cross over themselves (or otherwise be invalid), if this happens just generate a new one.
 NB the correct savePath will change every major BeamNG update, and that backslashes (\) aren't allowed in the config file; use forward slashes (/) instead.
 The tracks are designed to be played on Small Grid Map rather than the default Glow City.
@@ -21,3 +22,5 @@ Kindly note there's a licence attached to the program. It basically says:
 I'm flexible on these, so if the above is a problem just send me a message!
 
 I hope you like the program, have fun :)
+
+please note that the gui version requires the PySimpleGui package, this fork is written in python 3.10
