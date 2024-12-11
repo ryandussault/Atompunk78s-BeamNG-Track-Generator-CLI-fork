@@ -4,7 +4,7 @@ from os import system
 def main():
     PySimpleGUI.theme("SystemDefaultForReal")
 
-    layout = [[PySimpleGUI.Text("Track Length: "), PySimpleGUI.Slider(range=(1,1000), default_value=100, key="track_length_slider", enable_events=True, orientation="horizontal")],
+    layout = [[PySimpleGUI.Text("Track Length: "), PySimpleGUI.Slider(range=(1,2000), default_value=1000, key="track_length_slider", enable_events=True, orientation="horizontal")],
               [PySimpleGUI.Text("Track Width: "), PySimpleGUI.Slider(range=(1,100),default_value=8, key="track_width_slider", enable_events=True, orientation="horizontal")],
               [PySimpleGUI.Text("Track Start Height: "), PySimpleGUI.Slider(range=(1,500),default_value=100, key="track_height_slider", enable_events=True, orientation="horizontal")],
               [PySimpleGUI.Text("Short Straight Tile Type Distribution: "), PySimpleGUI.Slider(range=(0,100), default_value=1, key="short_straight_distro", enable_events=True, orientation='horizontal')],
@@ -29,7 +29,11 @@ def main():
             exit()
 
 def generate_track(params):
-    command = f"main_cli.py -tl={int(params['track_length_slider'])} -tw={int(params['track_width_slider'])} -sh={int(params['track_height_slider'])} -ssd={int(params['short_straight_distro'])} -lsd={int(params['long_straight_distro'])} -std={int(params['short_turn_distro'])} -ltd={int(params['long_turn_distro'])} -tn={params['track_name_input']} -owt={str(params['overwrite_track_checkbox'])}"
+    dot = ''
+    if params["overwrite_track_checkbox"] == False:
+        dot = "-dot"
+
+    command = f"python main_cli.py -tl={int(params['track_length_slider'])} -tw={int(params['track_width_slider'])} -sh={int(params['track_height_slider'])} -ssd={int(params['short_straight_distro'])} -lsd={int(params['long_straight_distro'])} -std={int(params['short_turn_distro'])} -ltd={int(params['long_turn_distro'])} -tn={params['track_name_input']} {dot}"
 
     system(command)
 
