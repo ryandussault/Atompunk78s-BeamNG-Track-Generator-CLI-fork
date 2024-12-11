@@ -357,7 +357,7 @@ while not acceptableTrack: #makes sure track doesn't go below 0 height
           if parameters["startHeight"] + currentHeight > 0:
               currentFileString += addPiece()
           else:
-              acceptableTrack = False
+              currentHeight = 1
     if not acceptableTrack and parameters["showDebugMessages"]:
       currentFileString = ""
       currentHeight = 0
