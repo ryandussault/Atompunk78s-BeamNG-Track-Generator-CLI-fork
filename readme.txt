@@ -1,7 +1,7 @@
 Hi! Welcome to Atompunk78's BeamNG Track Generator, I hope you enjoy it!
 
 To use the program:
- - Run the program using Python.
+ - Run the program using Python
  - Start BeamNG's track editor on gridmap
  - Load the newly generated track
  
