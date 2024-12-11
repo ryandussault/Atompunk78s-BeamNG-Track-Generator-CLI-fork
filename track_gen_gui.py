@@ -29,7 +29,7 @@ def main():
             exit()
 
 def generate_track(params):
-    command = f"python track_gen_script.py -tl={int(params['track_length_slider'])} -tw={int(params['track_width_slider'])} -sh={int(params['track_height_slider'])} -ssd={int(params['short_straight_distro'])} -lsd={int(params['long_straight_distro'])} -std={int(params['short_turn_distro'])} -ltd={int(params['long_turn_distro'])} -tn={params['track_name_input']} -owt={str(params['overwrite_track_checkbox'])}"
+    command = f"main_cli.py -tl={int(params['track_length_slider'])} -tw={int(params['track_width_slider'])} -sh={int(params['track_height_slider'])} -ssd={int(params['short_straight_distro'])} -lsd={int(params['long_straight_distro'])} -std={int(params['short_turn_distro'])} -ltd={int(params['long_turn_distro'])} -tn={params['track_name_input']} -owt={str(params['overwrite_track_checkbox'])}"
 
     system(command)
 
