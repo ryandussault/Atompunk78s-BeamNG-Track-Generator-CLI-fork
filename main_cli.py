@@ -183,6 +183,14 @@ def argalyzer(args):
           elif argument == "-tn":
               parameters["trackName"] = value+".json"
 
+          #controls the values of the height dist for all pieces
+          elif argument == "-hm":
+              height_multiplier(value/100)
+
+          #controls the chance of a height change for all pieces
+          elif argument == "-hcc":
+              height_change_chance(value)
+
           #help menu param
           elif argument == "-h":
               print_valid_args()
@@ -192,6 +200,7 @@ def argalyzer(args):
           elif argument == "-p":
               parameters["trackType"] = value
           
+          #verbose param
           elif argument == "-v":
               parameters["showDebugMessages"] = True
 
@@ -215,8 +224,36 @@ def param_distrobution_edit(param, distro_designator, new_distro_amount):
         param_distrobution_list.append(distro_designator)
     #sets the list in the specified parameter to the new list
     parameters[param] = param_distrobution_list
-        
 
+#controls the heights in the parameters
+def height_multiplier(mult):
+    for x in range(len(parameters["shortStraightHeightDist"])):
+        parameters["shortStraightHeightDist"][x] *= mult
+    for x in range(len(parameters["shortTurnHeightDist"])):
+        parameters["shortTurnHeightDist"][x] *= mult
+    for x in range(len(parameters["longTurnHeightDist"])):
+        parameters["longTurnHeightDist"][x] *= mult
+    for x in range(len(parameters["longStraightHeightDist"])):
+        parameters["longStraightHeightDist"][x] *= mult
+
+def height_change_chance(chance):
+    parameters["shortStraightHeightChanceDist"].clear()
+    parameters["shortTurnHeightChanceDist"].clear()
+    parameters["longStraightHeightChanceDist"].clear()
+    parameters["longTurnHeightChanceDist"].clear()
+
+    no_chance = 100-chance
+
+    for x in range(chance):
+      parameters["shortStraightHeightChanceDist"].append(1)
+      parameters["shortTurnHeightChanceDist"].append(1)
+      parameters["longStraightHeightChanceDist"].append(1)
+      parameters["longTurnHeightChanceDist"].append(1)
+    for y in range(no_chance):
+      parameters["shortStraightHeightChanceDist"].append(0)
+      parameters["shortTurnHeightChanceDist"].append(0)
+      parameters["longStraightHeightChanceDist"].append(0)
+      parameters["longTurnHeightChanceDist"].append(0)
 #prints the help message
 def print_valid_args():
     print("")
@@ -233,6 +270,8 @@ def print_valid_args():
     print(" -sh     sets the starts height of the track, values below 1 do not work")
     print(" -tn     changes the track name, takes a string, no spaces for now")
     print(" -p      changes the preset, if passed all other command line arguments will be ignored and the preset loaded, takes the name of the preset as a string")
+    print(" -hm     height multiplier, takes am integer representing percent multipler (ie: input of 50=50% multiplier), changes the height change of the track pieces")
+    print(" -hcc    height change chance, controls the chance of the height of a piece differing from the last, take a whole number representing a percent(ie: an input of 25=25% chance of height change)")
     print(" -v      verbose, shows debug messages, takes no value")
     print(" -h      prints this help message\n")
 
