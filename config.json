@@ -1,9 +1,10 @@
 {
-    "savePath": "AUTODETECT",
+    "savePath": "C:/Users/RyanD/AppData/Local/BeamNG.drive/0.34/trackEditor",
     "trackName": "Atompunk78's_autogen_track.json",
     "trackType": "custom",
     "overwriteTracks": true,
     "showDebugMessages": false,
+    "checkForOverlap": true,
     "totalLength": 2000,
     "startHeight": 100,
     "trackWidth": 8,
