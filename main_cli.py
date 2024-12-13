@@ -28,7 +28,20 @@ fileStart = """
     }
   },
   "length": 0,
-  "level": "smallgrid",
+  "level": "smallgrid",    
+  "materialFields":{
+    "A":{
+      "baseTexture":"/core/art/trackBuilder/track_editor_?6_d.dds",
+      "groundtype":"?7"
+    },
+    "B":{},
+    "C":{},
+    "D":{},
+    "E":{},
+    "F":{},
+    "G":{},
+    "H":{}
+  },
   "materials": [],
   "reversible": true,
   "subPieces": [
@@ -139,8 +152,8 @@ def argalyzer(args):
             value = int(value)
           #triggers when the 'value' part of the arg is not a number
           except ValueError:
-                  #prevents the error message form printing when passing in a track name
-                  if argument == "-tn" or argument == "-p":
+                  #prevents the error message form printing when passing in a string for certian arguments
+                  if argument == "-p" or argument == "-tn" or argument == "-tt" or argument == "-tm":
                       pass
                   else:  
                     print(f"invalid argument: {argv[arg]}")
@@ -182,6 +195,14 @@ def argalyzer(args):
           #track name param
           elif argument == "-tn":
               parameters["trackName"] = value+".json"
+
+          #Track texture param
+          elif argument == "-tt":
+              parameters["trackTexture"] = value
+
+          #track material param
+          elif argument == "-tm":
+              parameters["groundType"] = value
 
           #controls the values of the height dist for all pieces
           elif argument == "-hm":
@@ -272,6 +293,8 @@ def print_valid_args():
     print(" -p      changes the preset, if passed all other command line arguments will be ignored and the preset loaded, takes the name of the preset as a string")
     print(" -hm     height multiplier, takes am integer representing percent multipler (ie: input of 50=50% multiplier), changes the height change of the track pieces")
     print(" -hcc    height change chance, controls the chance of the height of a piece differing from the last, take a whole number representing a percent(ie: an input of 25=25% chance of height change)")
+    print(" -tt     track texture, takes a string, lower case, possible options are: 'base', 'mud', 'ice', 'grass', 'sand' (no quotes)")
+    print(" -tm     track material, takes a string, controls the type of surface, main choices are: 'SAND', 'MUD', 'GRASS', 'ASPHALT', 'CONCRETE', 'ICE', 'DIRT', 'ASPHALT_PREPPED' (no quotes)")
     print(" -v      verbose, shows debug messages, takes no value")
     print(" -h      prints this help message\n")
 
@@ -292,7 +315,7 @@ if parameters["trackType"] != "custom":
 
 fileName = parameters["savePath"] + "/" + parameters["trackName"]
 
-fileStart = fileStart.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"]).replace("?4", str(parameters["trackWidth"])).replace("?5", "v"+version)
+fileStart = fileStart.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"]).replace("?4", str(parameters["trackWidth"])).replace("?5", "v"+version).replace("?6", parameters["trackTexture"]).replace("?7", parameters["groundType"])
 fileEnd = fileEnd.replace("?1", parameters["centreMeshType"]).replace("?2", parameters["leftMeshType"]).replace("?3", parameters["rightMeshType"]).replace("?4", str(parameters["startHeight"]))
 
 def addPiece():
