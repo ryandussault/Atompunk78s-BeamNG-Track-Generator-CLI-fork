@@ -570,7 +570,7 @@ while not acceptableTrack: #makes sure track doesn't go below 0 height
     if not acceptableTrack and parameters["showDebugMessages"]:
       print("Track layout invalid, regenerating track, attempt: ", count)
     count += 1
-    if count > 1000:
+    if count > 10000:
         print("\nMaximum retries reached, exiting program. If this keeps happening, lower the maximum length or disable checkForOverlap.\n")
         sys.exit(1)
 
