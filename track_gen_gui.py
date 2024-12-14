@@ -53,7 +53,7 @@ def generate_track(params):
     if params["track_length_slider"] > 20000:
         step =4
         increment=20
-    elif params["track_length_slider"] >10000:
+    elif params["track_length_slider"] >5000:
         step =2
         increment=10
 
