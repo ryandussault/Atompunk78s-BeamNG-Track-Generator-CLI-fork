@@ -10,7 +10,7 @@ To use the program:
  ps: an exit code of zero in the gui output box means the script ran successfully, anything else is an error
 
  NOTE: overlap detection will greatly slow track generation times as track length increases!
-       step and incr arguments speed up overlap detection, however they decrease overlap detection accuracy
+       step and inc arguments speed up overlap detection, however they decrease overlap detection accuracy
        the gui wrapper sets them automatically based on track length
 
 This will generate one track with the default parameters. You don't need to reboot BeamNG to load a new generated track if the file name is the same as the old one.
