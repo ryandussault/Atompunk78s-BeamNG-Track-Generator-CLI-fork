@@ -1,5 +1,6 @@
 #Atompunk78's BeamNG Track Generator
 #Licenced under the CC BY-NC-SA 4.0 (see licence.txt for more info)
+#TODO add track border type options in gui and cli
 version = "1.10"
 
 from random import randint, choice
@@ -159,7 +160,7 @@ def argalyzer(args):
           #triggers when the 'value' part of the arg is not a number
           except ValueError:
                   #prevents the error message form printing when passing in a string for certian arguments
-                  if argument == "-p" or argument == "-tn" or argument == "-tt" or argument == "-tm":
+                  if argument == "-p" or argument == "-tn" or argument == "-tt" or argument == "-tm" or argument == "-cmt" or argument == "-smt":
                       pass
                   else:  
                     print(f"invalid argument: {argv[arg]}")
@@ -213,6 +214,15 @@ def argalyzer(args):
           #track material param
           elif argument == "-tm":
               parameters["groundType"] = value
+
+          #center mesh type param  
+          elif argument == "-cmt":
+              parameters["centreMeshType"] = value
+
+          #side mesh type param
+          elif argument == "-smt":
+              parameters["leftMeshType"] = value
+              parameters["rightMeshType"] = value     
 
           #controls the values of the height dist for all pieces
           elif argument == "-hm":
@@ -309,9 +319,11 @@ def print_valid_args():
     print(" -tn     changes the track name, takes a string, no spaces for now")
     print(" -p      changes the preset, if passed height and piece related arguments will be ignored, takes the name of the preset as a string")
     print(" -hm     height multiplier, takes am integer representing percent multipler (ie: input of 50=50% multiplier), changes the height change of the track pieces")
-    print(" -hcc    height change chance, controls the chance of the height of a piece differing from the last, take a whole number representing a percent(ie: an input of 25=25% chance of height change)")
+    print(" -hcc    height change chance, controls the chance of the height of a piece differing from the last, \n          takes a whole number representing a percent(ie: an input of 25=25% chance of height change)\n")
     print(" -tt     track texture, takes a string, lower case, possible options are: 'base', 'mud', 'ice', 'grass', 'sand' (no quotes)")
-    print(" -tm     track material, takes a string, controls the type of surface, main choices are: 'SAND', 'MUD', 'GRASS', 'ASPHALT', 'CONCRETE', 'ICE', 'DIRT', 'ASPHALT_PREPPED' (no quotes)")
+    print(" -tm     track material, takes a string, controls the type of surface, main choices are: \n          'SAND', 'MUD', 'GRASS', 'ASPHALT', 'CONCRETE', 'ICE', 'DIRT', 'ASPHALT_PREPPED' (no quotes)\n")
+    print(" -cmt    center mesh type, changes the shape of the center of the track, string, valid values include: 'regular', 'flat'")
+    print(" -smt    side mesh type, changes the mesh type of the sidewalls, string, values include: \n          'regular', 'bevel', 'wideBevel', 'highBevel', 'smallDiagonal', 'bigDiagonal', 'rail', 'none', 'smoothedRect', 'racetrack'\n")
     print(" -v      verbose, shows debug messages, takes no value")
     print(" -h      prints this help message\n")
     print(" -step   default of 1, set to 4 for tracks greater than 10,000 in length, only applies when using overlap detection")
