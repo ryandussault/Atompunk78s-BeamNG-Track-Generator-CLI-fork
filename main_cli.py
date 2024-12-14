@@ -232,6 +232,10 @@ def argalyzer(args):
           elif argument == "-hcc":
               height_change_chance(value)
 
+          #track length multiplier
+          elif argument == "-tlm":
+              track_length_multiplier(round(value/100))  
+
           #help menu param
           elif argument == "-h":
               print_valid_args()
@@ -244,9 +248,11 @@ def argalyzer(args):
           #verbose param
           elif argument == "-v":
               parameters["showDebugMessages"] = True
+
           #step param for long tracks  
           elif argument == "-step":
-              step=value  
+              step=value
+
           #increment command for long tracks  
           elif argument == "-inc":
               increment = value
@@ -271,6 +277,25 @@ def param_distrobution_edit(param, distro_designator, new_distro_amount):
         param_distrobution_list.append(distro_designator)
     #sets the list in the specified parameter to the new list
     parameters[param] = param_distrobution_list
+
+
+#track length multiplier function, increases all piece length params by a set amount
+def track_length_multiplier(mult):
+    parameters["longStraightLengthMin"] *= mult
+    parameters["longStraightLengthMax"] *= mult
+
+    parameters["longTurnLengthMin1"] *= mult
+    parameters["longTurnLengthMax1"] *= mult
+    parameters["longTurnLengthMin2"] *= mult
+    parameters["longTurnLengthMax2"] *= mult
+
+    parameters["shortTurnLengthMin1"] *= mult
+    parameters["shortTurnLengthMax1"] *= mult
+    parameters["shortTurnLengthMin2"] *= mult
+    parameters["shortTurnLengthMax2"] *= mult
+
+    parameters["shortStraightLengthMin"] *= mult
+    parameters["shortStraightLengthMax"] *= mult
 
 #controls the heights in the parameters
 def height_multiplier(mult):
@@ -308,6 +333,7 @@ def print_valid_args():
     print(" all arguments, unless otherwise specified, take a value\n")
     print(" valid commands include:")
     print(" -tl     sets the total track length")
+    print(" -tlm    track length multiplier, takes a percent as a whole number (25=25%), increases the length of track pieces, values below 100 do not work")
     print(" -tw     sets the tracks width")
     print(" -ssd    changes the distribution of the short straight tile type, the default is 2")
     print(" -lsd    changes the distribution of the long straight tile type, the default is 2")
