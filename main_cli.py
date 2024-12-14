@@ -97,6 +97,8 @@ currentHeight = 0
 currentLength = 0
 currentPosition = [0, 0, 0]
 currentHeading = 0 #degrees
+step = 1.0
+increment=5.0
 
 try:
     with open("config.json", "r") as file:
@@ -136,6 +138,8 @@ if parameters["savePath"] == "AUTODETECT":
 
 #analyzes all passed arguments and applies the passed values to the track parameters
 def argalyzer(args):
+    global step
+    global increment
     #loops through all passed args
     for arg in range(len(args)):
         #excludes the file path/execution command, which is the first arg
@@ -230,6 +234,12 @@ def argalyzer(args):
           #verbose param
           elif argument == "-v":
               parameters["showDebugMessages"] = True
+          #step param for long tracks  
+          elif argument == "-step":
+              step=value  
+          #increment command for long tracks  
+          elif argument == "-inc":
+              increment = value
 
           #error catcher for invalid inputs that still follow the proper input format
           else:
@@ -304,6 +314,9 @@ def print_valid_args():
     print(" -tm     track material, takes a string, controls the type of surface, main choices are: 'SAND', 'MUD', 'GRASS', 'ASPHALT', 'CONCRETE', 'ICE', 'DIRT', 'ASPHALT_PREPPED' (no quotes)")
     print(" -v      verbose, shows debug messages, takes no value")
     print(" -h      prints this help message\n")
+    print(" -step   default of 1, set to 4 for tracks greater than 10,000 in length, only applies when using overlap detection")
+    print(" -inc    increment, similar to step, default value is 5, recommend a value of 10 for tracks >10,000 in length, only applies when usig overlap detection")
+    print(" \nfor long tracks, >10,000 length, when using overlap detection, double both step and increment, (defaults: step=1, increment=5)\n  every doubling of step and increment decreases compute time by about 4x, however each increase sacrifices accuracy")
 
 #pre check to see if any args have been passed
 if len(argv) > 1:
@@ -378,12 +391,11 @@ def check_overlaps():
     return True
 
 def UpdatePositions(height, length, radius=None, direction=None): #also primarily ChatGPT; o1 is so powerful
-    global positions, currentHeading
+    global positions, currentHeading, increment, step
     x_start, y_start, _ = positions[-1]
 
     if radius is None:
         # Straight segment subdivision
-        step = 1.0
         steps = int(math.ceil(length / step))
         for s in range(1, steps+1):
             dist = s * step
@@ -396,7 +408,7 @@ def UpdatePositions(height, length, radius=None, direction=None): #also primaril
     else:
         # Curved segment subdivision
         angle_delta = -length * direction
-        increment = 5.0 if abs(angle_delta) >= 5 else angle_delta
+        increment = increment if abs(angle_delta) >= 5 else angle_delta
         scaled_radius = radius * 4
         center_angle = currentHeading - 90 * direction
         cx = x_start + scaled_radius * math.sin(math.radians(center_angle))
@@ -558,7 +570,7 @@ while not acceptableTrack: #makes sure track doesn't go below 0 height
     if not acceptableTrack and parameters["showDebugMessages"]:
       print("Track layout invalid, regenerating track, attempt: ", count)
     count += 1
-    if count > 100:
+    if count > 1000:
         print("\nMaximum retries reached, exiting program. If this keeps happening, lower the maximum length or disable checkForOverlap.\n")
         sys.exit(1)
 
